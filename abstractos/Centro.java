@@ -8,12 +8,4 @@ public class Centro<T> extends Vertice<T> {
     this.costoUnitario = costoUnitario;
     this.costoFijo = costoFijo;
   }
-
-  public T getCostoUnitario() {
-    return costoUnitario;
-  }
-
-  public T getCostoFijo() {
-    return costoFijo;
-  }
 }

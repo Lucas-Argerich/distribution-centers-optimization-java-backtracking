@@ -8,10 +8,6 @@ public class TPO {
     Datos.cargarVertices(grafo);
     Datos.cargarRutas(grafo);
 
-    // grafo.print();
-
-    System.out.println(Datos.CLIENTES);
+    grafo.print();
   }
-
-  
 }

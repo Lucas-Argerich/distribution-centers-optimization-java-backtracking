@@ -6,8 +6,4 @@ public class Cliente<T> extends Vertice<T> {
     super(valor);
     this.volumen = volumen;
   }
-
-  public T getVolumen() {
-    return volumen;
-  }
 }

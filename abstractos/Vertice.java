@@ -2,14 +2,10 @@ package abstractos;
 import java.util.Objects;
 
 public class Vertice<T> {
-  private T valor;
+  T valor;
 
   public Vertice(T valor) {
     this.valor = valor;
-  }
-
-  public T getValor() {
-    return valor;
   }
 
   @Override
