@@ -2,7 +2,7 @@ package abstractos;
 import java.util.Objects;
 
 public abstract class Vertice {
-  int valor;
+  public int valor;
 
   public Vertice(int valor) {
     this.valor = valor;

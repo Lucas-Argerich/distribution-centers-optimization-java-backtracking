@@ -1,7 +1,7 @@
 package abstractos;
 public class Centro extends Vertice {
-  int costoUnitario;
-  int costoFijo;
+  public int costoUnitario;
+  public int costoFijo;
 
   public Centro(int valor, int costoUnitario, int costoFijo) {
     super(valor);

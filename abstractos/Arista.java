@@ -1,9 +1,9 @@
 package abstractos;
 
 public class Arista implements Comparable<Arista> {
-  int origen;
-  int destino;
-  int peso;
+  public int origen;
+  public int destino;
+  public int peso;
 
   public Arista(int origen, int destino, int peso) {
     super();

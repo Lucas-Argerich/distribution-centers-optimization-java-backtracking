@@ -1,6 +1,6 @@
 package abstractos;
 public class Cliente extends Vertice {
- int volumen;
+ public int volumen;
 
   public Cliente(int valor, int volumen) {
     super(valor);
