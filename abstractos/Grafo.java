@@ -29,8 +29,8 @@ public class Grafo {
   }
   
   public void addArista(Arista arista) {
-    Vertice origen = this.getVertice(arista.origen);
-    Vertice destino = this.getVertice(arista.destino);
+    Vertice origen = arista.origen;
+    Vertice destino = arista.destino;
     if (!grafo.containsKey(origen) || !grafo.containsKey(destino)) {
       throw new IllegalArgumentException("Vertice no encontrado en el grafo");
     }
@@ -57,7 +57,7 @@ public class Grafo {
       ArrayList<Arista> aristas = grafo.get(vertice);
       System.out.print("Vertex " + vertice.valor + ": ");
       for (Arista arista : aristas) {
-        System.out.print("(" + arista.destino + ", " + arista.peso + ") ");
+        System.out.print("(" + arista.destino.valor + ", " + arista.peso + ") ");
       }
       System.out.println();
     }

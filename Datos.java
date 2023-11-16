@@ -8,6 +8,7 @@ import abstractos.Arista;
 import abstractos.Centro;
 import abstractos.Cliente;
 import abstractos.Grafo;
+import abstractos.Vertice;
 
 public class Datos {
   public static int CLIENTES;
@@ -69,11 +70,13 @@ public class Datos {
       while (str != null) {
         String[] params = str.split("#")[0].trim().split(",");
 
-        int nodoOrigen = Integer.parseInt(params[0]);
-        int nodoDestino = Integer.parseInt(params[1]);
+        int valorOrigen = Integer.parseInt(params[0]);
+        Vertice origen = grafo.getVertice(valorOrigen);
+        int valorDestino = Integer.parseInt(params[1]);
+        Vertice destino = grafo.getVertice(valorDestino);
         int coste = Integer.parseInt(params[2]);
 
-        Arista arista = new Arista(nodoOrigen, nodoDestino, coste);
+        Arista arista = new Arista(origen, destino, coste);
         grafo.addArista(arista);
 
         str = br.readLine();
