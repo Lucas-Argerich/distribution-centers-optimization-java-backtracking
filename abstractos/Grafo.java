@@ -1,17 +1,18 @@
 package abstractos;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Grafo {
-  private Map<Vertice, MinHeap> grafo;
+  private Map<Vertice, ArrayList<Arista>> grafo;
   // HashMap de (vertice, aristas)
 
   public Grafo() {
-    this.grafo = new HashMap<Vertice, MinHeap>();
+    this.grafo = new HashMap<Vertice, ArrayList<Arista>>();
   }
  
   public void addVertice(Vertice vertice) {
-    grafo.put(vertice, new MinHeap());
+    grafo.put(vertice, new ArrayList<Arista>());
   }
 
   public Vertice getVertice(int valor) {
@@ -24,7 +25,7 @@ public class Grafo {
   }
 
   public Vertice[] getVertices() {
-    return (Vertice[])grafo.keySet().toArray();
+    return grafo.keySet().toArray(new Vertice[0]);
   }
   
   public void addArista(Arista arista) {
@@ -34,11 +35,11 @@ public class Grafo {
       throw new IllegalArgumentException("Vertice no encontrado en el grafo");
     }
 
-    MinHeap aristas = grafo.get(origen);
-    aristas.insert(arista);
+    ArrayList<Arista> aristas = grafo.get(origen);
+    aristas.add(arista);
   }
   
-  public MinHeap getAristas(int vertice) {
+  public ArrayList<Arista> getAristas(int vertice) {
     Vertice origen = this.getVertice(vertice);
     if (!grafo.containsKey(origen)) {
       throw new IllegalArgumentException("Vertice no encontrado en el grafo");
@@ -53,7 +54,7 @@ public class Grafo {
 
   public void print() {
     for (Vertice vertice : grafo.keySet()) {
-      MinHeap aristas = grafo.get(vertice);
+      ArrayList<Arista> aristas = grafo.get(vertice);
       System.out.print("Vertex " + vertice.valor + ": ");
       for (Arista arista : aristas) {
         System.out.print("(" + arista.destino + ", " + arista.peso + ") ");
