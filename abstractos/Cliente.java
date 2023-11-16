@@ -1,8 +1,8 @@
 package abstractos;
-public class Cliente<T> extends Vertice<T> {
-  T volumen;
+public class Cliente extends Vertice {
+ int volumen;
 
-  public Cliente(T valor, T volumen) {
+  public Cliente(int valor, int volumen) {
     super(valor);
     this.volumen = volumen;
   }

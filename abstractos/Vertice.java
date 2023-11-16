@@ -1,21 +1,20 @@
 package abstractos;
 import java.util.Objects;
 
-public class Vertice<T> {
-  T valor;
+public abstract class Vertice {
+  int valor;
 
-  public Vertice(T valor) {
+  public Vertice(int valor) {
     this.valor = valor;
   }
 
   @Override
-  @SuppressWarnings("unchecked")
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
     if (obj == null || getClass() != obj.getClass())
       return false;
-    Vertice<T> vertice = (Vertice<T>) obj;
+    Vertice vertice = (Vertice) obj;
     return valor == vertice.valor;
   }
 

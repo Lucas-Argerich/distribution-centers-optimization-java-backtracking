@@ -15,7 +15,7 @@ public class Datos {
   public static int VERTICES;
   public static int RUTAS;
 
-  public static void cargarVertices(Grafo<Integer> grafo) {
+  public static void cargarVertices(Grafo grafo) {
     File archivoVertices = new File("archivos\\clientesycentros.txt");
 
     BufferedReader br;
@@ -36,12 +36,12 @@ public class Datos {
           int costoUnitario = Integer.parseInt(params[1]);
           int costoFijo = Integer.parseInt(params[2]);
 
-          Centro<Integer> centro = new Centro<Integer>(CLIENTES + valor, costoUnitario, costoFijo);
+          Centro centro = new Centro(CLIENTES + valor, costoUnitario, costoFijo);
           grafo.addVertice(centro);
         } else { // es un cliente
           int volumen = Integer.parseInt(params[1]);
 
-          Cliente<Integer> cliente = new Cliente<Integer>(valor, volumen);
+          Cliente cliente = new Cliente(valor, volumen);
           grafo.addVertice(cliente);
         }
 
@@ -55,7 +55,7 @@ public class Datos {
     System.out.println("Vertices cargados.");
   }
 
-  public static void cargarRutas(Grafo<Integer> grafo) {
+  public static void cargarRutas(Grafo grafo) {
     File archivoRutas = new File("archivos\\rutas.txt");
 
     BufferedReader br;
@@ -73,7 +73,7 @@ public class Datos {
         int nodoDestino = Integer.parseInt(params[1]);
         int coste = Integer.parseInt(params[2]);
 
-        Arista<Integer> arista = new Arista<Integer>(nodoOrigen, nodoDestino, coste);
+        Arista arista = new Arista(nodoOrigen, nodoDestino, coste);
         grafo.addArista(arista);
 
         str = br.readLine();

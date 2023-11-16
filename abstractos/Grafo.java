@@ -1,18 +1,21 @@
 package abstractos;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class Grafo<T> {
-  private Map<Vertice<T>, List<Arista<T>>> grafo;
+public class Grafo {
+  private Map<Vertice, MinHeap> grafo;
+  // HashMap de (vertice, aristas)
 
   public Grafo() {
-    this.grafo = new HashMap<Vertice<T>, List<Arista<T>>>();
+    this.grafo = new HashMap<Vertice, MinHeap>();
+  }
+ 
+  public void addVertice(Vertice vertice) {
+    grafo.put(vertice, new MinHeap());
   }
 
-  public Vertice<T> getVertice(T valor) {
-    for (Vertice<T> vertice : grafo.keySet()) {
+  public Vertice getVertice(int valor) {
+    for (Vertice vertice : grafo.keySet()) {
       if (vertice.valor == valor) {
         return vertice;
       }
@@ -20,23 +23,23 @@ public class Grafo<T> {
     return null;
   }
 
-  public void addVertice(Vertice<T> vertice) {
-    grafo.put(vertice, new ArrayList<>());
+  public Vertice[] getVertices() {
+    return (Vertice[])grafo.keySet().toArray();
   }
-
-  public void addArista(Arista<T> arista) {
-    Vertice<T> origen = this.getVertice(arista.origen);
-    Vertice<T> destino = this.getVertice(arista.destino);
+  
+  public void addArista(Arista arista) {
+    Vertice origen = this.getVertice(arista.origen);
+    Vertice destino = this.getVertice(arista.destino);
     if (!grafo.containsKey(origen) || !grafo.containsKey(destino)) {
       throw new IllegalArgumentException("Vertice no encontrado en el grafo");
     }
 
-    List<Arista<T>> aristas = grafo.get(origen);
-    aristas.add(arista);
+    MinHeap aristas = grafo.get(origen);
+    aristas.insert(arista);
   }
-
-  public List<Arista<T>> getAristas(T vertice) {
-    Vertice<T> origen = this.getVertice(vertice);
+  
+  public MinHeap getAristas(int vertice) {
+    Vertice origen = this.getVertice(vertice);
     if (!grafo.containsKey(origen)) {
       throw new IllegalArgumentException("Vertice no encontrado en el grafo");
     }
@@ -44,11 +47,15 @@ public class Grafo<T> {
     return grafo.get(origen);
   }
 
+  public int size() {
+    return grafo.size();
+  }
+
   public void print() {
-    for (Vertice<T> vertice : grafo.keySet()) {
-      List<Arista<T>> aristas = grafo.get(vertice);
+    for (Vertice vertice : grafo.keySet()) {
+      MinHeap aristas = grafo.get(vertice);
       System.out.print("Vertex " + vertice.valor + ": ");
-      for (Arista<T> arista : aristas) {
+      for (Arista arista : aristas) {
         System.out.print("(" + arista.destino + ", " + arista.peso + ") ");
       }
       System.out.println();
