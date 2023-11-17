@@ -49,6 +49,7 @@ public class Dijkstra {
     int mejorDistancia = Integer.MAX_VALUE;
     Centro mejor = null;
     for (Centro centro : centros) {
+      if (centro == null) continue;
       int distancia = this.getDistancia(centro);
       if (distancia < mejorDistancia) {
         mejorDistancia = distancia;
