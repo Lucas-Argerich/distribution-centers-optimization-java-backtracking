@@ -48,14 +48,26 @@ public class Dijkstra {
   public Arista mejorCentro(Centro[] centros) {
     int mejorDistancia = Integer.MAX_VALUE;
     Centro mejor = null;
+
     for (Centro centro : centros) {
       if (centro == null) continue;
+
       int distancia = this.getDistancia(centro);
+
       if (distancia < mejorDistancia) {
         mejorDistancia = distancia;
         mejor = centro;
       }
     }
-   return new Arista(origen, mejor, mejorDistancia);
+
+    if (mejor == null) return null;
+    return new Arista(origen, mejor, mejorDistancia);
+  }
+
+  public void printMejorCentro(Centro[] centros) {
+    Arista mejorRuta = this.mejorCentro(centros);
+    System.out.println("Cliente " + mejorRuta.origen.valor + " -> Centro " +
+        mejorRuta.destino.valor + ". Distancia: "
+        + mejorRuta.peso);
   }
 }
