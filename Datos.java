@@ -7,7 +7,6 @@ import java.io.IOException;
 import abstractos.Arista;
 import abstractos.Centro;
 import abstractos.Cliente;
-import abstractos.Grafo;
 import abstractos.Vertice;
 
 public class Datos {

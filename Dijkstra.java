@@ -5,7 +5,6 @@ import java.util.PriorityQueue;
 
 import abstractos.Arista;
 import abstractos.Centro;
-import abstractos.Grafo;
 import abstractos.Vertice;
 
 public class Dijkstra {

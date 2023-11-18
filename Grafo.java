@@ -1,7 +1,9 @@
-package abstractos;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import abstractos.Arista;
+import abstractos.Vertice;
 
 public class Grafo {
   private Map<Vertice, ArrayList<Arista>> grafo;
