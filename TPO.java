@@ -1,7 +1,6 @@
 import abstractos.Arista;
 import abstractos.Centro;
 import abstractos.Cliente;
-import abstractos.Grafo;
 import abstractos.Vertice;
 
 public class TPO {
@@ -38,16 +37,16 @@ public class TPO {
   }
 
   private static int backtracking(
-      Centro[] parcial, 
-      Centro[] centros, 
-      Dijkstra[] rutasClientes, 
+      Centro[] parcial,
+      Centro[] centros,
+      Dijkstra[] rutasClientes,
       int etapa,
       int menorCosto,
       Centro[] solucion) {
 
     // Fin de las etapas.
     if (etapa == centros.length) {
-      return menorCosto;
+      return Integer.MAX_VALUE;
     }
 
     for (int i = etapa; i < centros.length; i++) {
@@ -66,14 +65,15 @@ public class TPO {
 
       int minCosto = backtracking(parcial, centros, rutasClientes, i + 1, menorCosto, solucion);
       // Actualizamos si se encontro un nuevo mejor costo.
-      if (minCosto < menorCosto) menorCosto = minCosto;
+      if (minCosto < menorCosto)
+        menorCosto = minCosto;
 
       // Eliminamos el centro del parcial para el siguiente i.
       parcial[i] = null;
     }
 
     // Devolvemos el menor costo acutal.
-    //  ya que al no ser por referencia no se cambia en ramas anteriores.
+    // ya que al no ser por referencia no se cambia en ramas anteriores.
     return menorCosto;
   }
 
@@ -99,12 +99,13 @@ public class TPO {
 
   private static int calcularCostoCliente(Dijkstra dijkstra, Centro[] centrosElegidos) {
     Arista camino = dijkstra.mejorCentro(centrosElegidos);
-    
-    if (camino == null) return Integer.MAX_VALUE; // No hay camino / Centro[] vacio.
-    
+
+    if (camino == null)
+      return Integer.MAX_VALUE; // No hay camino / Centro[] vacio.
+
     Cliente cliente = (Cliente) camino.origen;
     Centro centro = (Centro) camino.destino;
-    
+
     // Transporte a centro = cliente.volumen * (peso total del recorrido).
     // Transporte a puerto = cliente.volumen * centro.costoUnitario
     return cliente.volumen * (camino.peso + centro.costoUnitario);
