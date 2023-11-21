@@ -24,7 +24,7 @@ public class Datos {
 
       CLIENTES = Integer.parseInt(br.readLine().split("#")[0].trim());
       CENTROS = Integer.parseInt(br.readLine().split("#")[0].trim());
-      VERTICES = CLIENTES * CENTROS;
+      VERTICES = CLIENTES + CENTROS;
 
       String str = br.readLine();
 
