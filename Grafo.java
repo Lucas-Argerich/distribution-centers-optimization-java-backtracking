@@ -27,7 +27,7 @@ public class Grafo {
   }
 
   public Vertice[] getVertices() {
-    return grafo.keySet().toArray(new Vertice[0]);
+    return grafo.keySet().toArray(new Vertice[grafo.size()]);
   }
   
   public void addArista(Arista arista) {
