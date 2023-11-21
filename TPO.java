@@ -1,10 +1,16 @@
+import java.util.Arrays;
+
 import abstractos.Arista;
 import abstractos.Centro;
 import abstractos.Cliente;
 import abstractos.Vertice;
 
 public class TPO {
+  static int EVALUACIONES_BACKTRACKING = 0;
+
   public static void main(String[] args) {
+    long tiempoInicio = System.currentTimeMillis();
+
     // Crear el Grafo.
     Grafo grafo = new Grafo();
 
@@ -25,51 +31,67 @@ public class TPO {
       resultados[d++] = dijkstra;
     }
 
+    // Array de combinaciones para backtracking. (-1: no visto, 0: no, 1: si)
+    int[] combinacion = new int[Datos.CENTROS];
+    Arrays.fill(combinacion, -1);
+
     // Array solucion para cargar la mejor combinacion de centros en backtracking.
     Centro[] solucion = new Centro[Datos.CENTROS];
 
-    // Costo minimo resultado del backtracking
-    int menorCosto = backtracking(new Centro[Datos.CENTROS], getCentros(grafo), resultados, 0, Integer.MAX_VALUE,
+    // Costo minimo resultado del backtracking.
+    int menorCosto = backtracking(combinacion, getCentros(grafo), resultados, 0, Integer.MAX_VALUE,
         solucion);
+
+    long tiempoFin = System.currentTimeMillis();
+    long tiempoEjecucion = tiempoFin - tiempoInicio;
 
     // Print solucion.
     printResultados(solucion, menorCosto);
+
+    System.out.println("Evaluaciones de Backtracking: " + EVALUACIONES_BACKTRACKING);
+
+    System.out.println("Tiempo de ejecución: " + tiempoEjecucion + " ms.");
   }
 
   private static int backtracking(
-      Centro[] parcial,
+      int[] combinacion,
       Centro[] centros,
       Dijkstra[] rutasClientes,
       int etapa,
       int menorCosto,
       Centro[] solucion) {
 
-    // Fin de las etapas.
+    EVALUACIONES_BACKTRACKING += 1;
+
+    // Caso base.
     if (etapa == centros.length) {
-      return Integer.MAX_VALUE;
+      return calcularCostoTotal(combinacion, centros, rutasClientes);
     }
 
-    for (int i = etapa; i < centros.length; i++) {
-      // Agregamos los centros de cada etapa.
-      parcial[i] = centros[i];
+    // Costo de la combinacion actual.
+    int costoActual = calcularCostoTotal(combinacion, centros, rutasClientes);
 
-      // Calculamos el costo total con el conjunto acutal.
-      int candidatoMinCosto = calcularCostoTotal(parcial, rutasClientes);
-      // Evaluamos si el conjunto actual es mejor.
-      if (candidatoMinCosto < menorCosto) {
-        // Actualizamos el menorCosto
-        menorCosto = candidatoMinCosto;
-        // Hacemos una copia del conjunto parcial en solucion.
-        System.arraycopy(parcial, 0, solucion, 0, parcial.length);
+    // Iteramos sobre los distintos estados de la nueva etapa.
+    for (int i = 0; i <= 1; i++) {
+      combinacion[etapa] = i;
+      // Costo de la nueva combinacion.
+      int costo = calcularCostoTotal(combinacion, centros, rutasClientes);
+      // Poda si el costo es mayor al costo del padre.
+      if (costo > costoActual)
+        continue;
+      // Buscamos el mejor candidato entre los hijos.
+      int mejorCandidato = backtracking(combinacion, centros, rutasClientes, etapa + 1, menorCosto, solucion);
+      // Guardamos el resultado.
+      if (mejorCandidato < menorCosto) {
+        menorCosto = mejorCandidato;
+        if (i == 1) {
+          solucion[etapa] = centros[etapa];
+        } else {
+          solucion[etapa] = null;
+        }
       }
 
-      int minCosto = backtracking(parcial, centros, rutasClientes, i + 1, menorCosto, solucion);
-      // Actualizamos si se encontro un nuevo mejor costo.
-      if (minCosto < menorCosto)
-        menorCosto = minCosto;
-
-      // Eliminamos el centro del parcial para el siguiente i.
-      parcial[i] = null;
+      combinacion[etapa] = -1;
     }
 
     // Devolvemos el menor costo acutal.
@@ -77,18 +99,30 @@ public class TPO {
     return menorCosto;
   }
 
-  private static int calcularCostoTotal(Centro[] centros, Dijkstra[] rutasClientes) {
+  private static int calcularCostoTotal(int[] combinacion, Centro[] centros, Dijkstra[] rutasClientes) {
     int costosVariables = 0;
     int costosFijos = 0;
 
+    Centro[] parcial = new Centro[combinacion.length];
+    for (int i = 0; i < combinacion.length; i++) {
+      if (combinacion[i] != 1)
+        continue;
+      parcial[i] = centros[i];
+    }
+
     // Costos Variables (Costos de transporte de los clientes).
     for (Dijkstra rutasCliente : rutasClientes) {
-      int costoCliente = calcularCostoCliente(rutasCliente, centros);
+      int costoCliente = calcularCostoCliente(rutasCliente, parcial);
+
+      if (costoCliente == Integer.MAX_VALUE) {
+        return Integer.MAX_VALUE;
+      }
+
       costosVariables += costoCliente;
     }
 
     // Costos Fijos (Costos fijos de los puertos).
-    for (Centro centro : centros) {
+    for (Centro centro : parcial) {
       if (centro == null)
         continue;
       costosFijos += centro.costoFijo;
