@@ -27,7 +27,7 @@ public class Pseudo {
       resultados.put(cliente, dijkstra);
     }
 
-        // Array de combinaciones para backtracking. (-1: no visto, 0: no, 1: si)
+    // Array de combinaciones para backtracking. (-1: no visto, 0: no, 1: si)
     int[] combinacion = new int[Datos.CENTROS];
     Arrays.fill(combinacion, -1);
 
@@ -106,14 +106,15 @@ public class Pseudo {
         }
       }
       combinacion[etapa] = -1;
-    } 
+    }
 
     // Devolvemos el menor costo acutal.
     // ya que al no ser por referencia no se cambia en ramas anteriores.
     return menorCosto;
   }
 
-  private static int calcularCostoTotal(int[] combinacion, Centro[] centros, Map<Cliente, Map<Vertice, Integer>> datosClientes) { // O(n^2)
+  private static int calcularCostoTotal(int[] combinacion, Centro[] centros,
+      Map<Cliente, Map<Vertice, Integer>> datosClientes) { // O(n^2)
     int costosVariables = 0;
     int costosFijos = 0;
 
@@ -130,11 +131,11 @@ public class Pseudo {
       Map<Vertice, Integer> rutasCliente = datosCliente.getValue();
 
       int costoCliente = calcularCostoCliente(cliente, rutasCliente, parcial); // O(n)
-      
+
       if (costoCliente == Integer.MAX_VALUE) {
         return Integer.MAX_VALUE;
       }
-      
+
       costosVariables += costoCliente;
     }
 
