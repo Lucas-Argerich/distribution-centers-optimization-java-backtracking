@@ -1,3 +1,4 @@
+package pseudo;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -6,6 +7,8 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Map.Entry;
 
+import Datos;
+import Grafo;
 import abstractos.Arista;
 import abstractos.Centro;
 import abstractos.Cliente;

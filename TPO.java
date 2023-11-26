@@ -7,6 +7,7 @@ import abstractos.Vertice;
 
 public class TPO {
   static int EVALUACIONES_BACKTRACKING = 0;
+  static int PODAS = 0;
 
   public static void main(String[] args) {
     long tiempoInicio = System.currentTimeMillis();
@@ -49,6 +50,7 @@ public class TPO {
     printResultados(solucion, menorCosto);
 
     System.out.println("Evaluaciones de Backtracking: " + EVALUACIONES_BACKTRACKING);
+    System.out.println("Podas efectuadas: " + PODAS);
 
     System.out.println("Tiempo de ejecución: " + tiempoEjecucion + " ms.");
   }
@@ -72,13 +74,16 @@ public class TPO {
     int costoActual = calcularCostoTotal(combinacion, centros, rutasClientes);
 
     // Iteramos sobre los distintos estados de la nueva etapa.
-    for (int i = 0; i <= 1; i++) {
+    for (int i = 0; i <= 1; i++) { // 0, 1
       combinacion[etapa] = i;
       // Costo de la nueva combinacion.
       int costo = calcularCostoTotal(combinacion, centros, rutasClientes);
       // Poda si el costo es mayor al costo del padre.
-      if (costo > costoActual)
+      if (costo > costoActual) {
+        PODAS += 1;
         continue;
+      }
+
       // Buscamos el mejor candidato entre los hijos.
       int mejorCandidato = backtracking(combinacion, centros, rutasClientes, etapa + 1, menorCosto, solucion);
       // Guardamos el resultado.
