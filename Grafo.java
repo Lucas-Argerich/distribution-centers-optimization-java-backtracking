@@ -41,13 +41,8 @@ public class Grafo {
     aristas.add(arista);
   }
   
-  public ArrayList<Arista> getAristas(int vertice) {
-    Vertice origen = this.getVertice(vertice);
-    if (!grafo.containsKey(origen)) {
-      throw new IllegalArgumentException("Vertice no encontrado en el grafo");
-    }
-
-    return grafo.get(origen);
+  public ArrayList<Arista> getAristas(Vertice vertice) {
+    return grafo.get(vertice);
   }
 
   public int size() {

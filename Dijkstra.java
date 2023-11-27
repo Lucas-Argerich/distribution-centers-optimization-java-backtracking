@@ -29,7 +29,7 @@ public class Dijkstra {
     while (!colaPrioridad.isEmpty()) {
       Vertice actual = colaPrioridad.poll();
 
-      for (Arista arista : grafo.getAristas(actual.valor)) {
+      for (Arista arista : grafo.getAristas(actual)) {
         Vertice vecino = arista.destino;
         int nuevaDistancia = distancias.get(actual) + arista.peso;
         if (nuevaDistancia < distancias.get(vecino)) {
