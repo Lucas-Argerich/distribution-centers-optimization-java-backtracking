@@ -1,6 +1,5 @@
 import java.util.Arrays;
 
-import abstractos.Arista;
 import abstractos.Centro;
 import abstractos.Cliente;
 import abstractos.Vertice;
@@ -136,17 +135,31 @@ public class TPO {
   }
 
   private static int calcularCostoCliente(Dijkstra dijkstra, Centro[] centrosElegidos) {
-    Arista camino = dijkstra.mejorCentro(centrosElegidos);
+    Cliente cliente = (Cliente) dijkstra.origen;
+    int costoMenor = Integer.MAX_VALUE;
+    Centro mejor = null;
 
-    if (camino == null)
+    for (Centro centro : centrosElegidos) {
+      if (centro == null) continue;
+
+      int distancia = dijkstra.getDistancia(centro);
+      
+      int costoCentro = cliente.volumen * (distancia + centro.costoUnitario);
+
+      if (costoCentro < costoMenor) {
+        costoMenor = costoCentro;
+        mejor = centro;
+      }
+    }
+
+    if (mejor == null)
       return Integer.MAX_VALUE; // No hay camino / Centro[] vacio.
 
-    Cliente cliente = (Cliente) camino.origen;
-    Centro centro = (Centro) camino.destino;
+    int distancia = dijkstra.getDistancia(mejor);
 
     // Transporte a centro = cliente.volumen * (peso total del recorrido).
     // Transporte a puerto = cliente.volumen * centro.costoUnitario
-    return cliente.volumen * (camino.peso + centro.costoUnitario);
+    return cliente.volumen * (distancia + mejor.costoUnitario);
   }
 
   private static Centro[] getCentros(Grafo grafo) {
