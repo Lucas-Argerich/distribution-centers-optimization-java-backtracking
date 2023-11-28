@@ -14,7 +14,7 @@ public class Dijkstra {
 
   Dijkstra(Grafo grafo, Vertice origen) {
     this.origen = origen;
-    distancias = new HashMap<>();
+    distancias = new HashMap<Vertice, Integer>();
     colaPrioridad = new PriorityQueue<>(Comparator.comparingInt(distancias::get));
 
     // Inicialización de distancias
