@@ -64,10 +64,10 @@ public class TPO {
       Centro[] solucion) {
 
     EVALUACIONES_BACKTRACKING += 1;
-    
+
     // Costo de la combinacion actual.
     int costoActual = calcularCostoTotal(combinacion, centros, rutasClientes);
-    
+
     // Caso base.
     if (etapa == centros.length) {
       return costoActual;
@@ -90,12 +90,12 @@ public class TPO {
           menorCosto = mejorCandidato;
           if (i == 1) {
             solucion[etapa] = centros[etapa];
-        } else {
-          solucion[etapa] = null;
+          } else {
+            solucion[etapa] = null;
+          }
         }
       }
-    }
-    combinacion[etapa] = -1;
+      combinacion[etapa] = -1;
     }
 
     // Devolvemos el menor costo acutal.
