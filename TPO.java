@@ -51,6 +51,7 @@ public class TPO {
 
     System.out.println("Evaluaciones de Backtracking: " + EVALUACIONES_BACKTRACKING);
     System.out.println("Podas efectuadas: " + PODAS);
+    System.out.println("Evaluaciones Esperadas sin Poda: " + (int)(Math.pow(2, Datos.CENTROS + 1) - 1));
 
     System.out.println("Tiempo de ejecución: " + tiempoEjecucion + " ms.");
   }
@@ -79,10 +80,7 @@ public class TPO {
       // Costo de la nueva combinacion.
       int costo = calcularCostoTotal(combinacion, centros, rutasClientes);
       // Poda si el costo es mayor al costo del padre.
-      if (costo > costoActual) {
-        PODAS += 1;
-        continue;
-      } else {
+      if (costo <= costoActual) {
         // Buscamos el mejor candidato entre los hijos.
         int mejorCandidato = backtracking(combinacion, centros, rutasClientes, etapa + 1, menorCosto, solucion);
         // Guardamos el resultado.
@@ -94,6 +92,8 @@ public class TPO {
             solucion[etapa] = null;
           }
         }
+      } else {
+        PODAS += 1;
       }
       combinacion[etapa] = -1;
     }
