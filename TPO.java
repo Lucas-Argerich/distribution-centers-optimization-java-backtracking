@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import abstractos.Arista;
 import abstractos.Centro;
@@ -54,6 +56,27 @@ public class TPO {
     System.out.println("Evaluaciones Esperadas sin Poda: " + (int)(Math.pow(2, Datos.CENTROS + 1) - 1));
 
     System.out.println("Tiempo de ejecución: " + tiempoEjecucion + " ms.");
+  
+    HashMap<Integer, ArrayList<Integer>> ra = new HashMap<>();
+
+    for (Dijkstra res : resultados) {
+      Arista a = res.mejorCentro(solucion);
+      ArrayList<Integer> an = ra.get(a.destino.valor);
+
+      if (an == null) {
+        ra.put(a.destino.valor, new ArrayList<Integer>());
+        an = ra.get(a.destino.valor);
+      }
+      an.add(a.origen.valor);
+    }
+
+    for (java.util.Map.Entry<Integer, ArrayList<Integer>> centroRes : ra.entrySet()) {
+      System.out.print(centroRes.getKey() + ": [ ");
+      for (int v : centroRes.getValue()) {
+        System.out.print(v + " ");
+      }
+      System.out.println("]");
+    }
   }
 
   private static int backtracking(
