@@ -64,14 +64,14 @@ public class TPO {
       Centro[] solucion) {
 
     EVALUACIONES_BACKTRACKING += 1;
-
-    // Caso base.
-    if (etapa == centros.length) {
-      return calcularCostoTotal(combinacion, centros, rutasClientes);
-    }
-
+    
     // Costo de la combinacion actual.
     int costoActual = calcularCostoTotal(combinacion, centros, rutasClientes);
+    
+    // Caso base.
+    if (etapa == centros.length) {
+      return costoActual;
+    }
 
     // Iteramos sobre los distintos estados de la nueva etapa.
     for (int i = 0; i <= 1; i++) { // 0, 1
@@ -82,21 +82,20 @@ public class TPO {
       if (costo > costoActual) {
         PODAS += 1;
         continue;
-      }
-
-      // Buscamos el mejor candidato entre los hijos.
-      int mejorCandidato = backtracking(combinacion, centros, rutasClientes, etapa + 1, menorCosto, solucion);
-      // Guardamos el resultado.
-      if (mejorCandidato < menorCosto) {
-        menorCosto = mejorCandidato;
-        if (i == 1) {
-          solucion[etapa] = centros[etapa];
+      } else {
+        // Buscamos el mejor candidato entre los hijos.
+        int mejorCandidato = backtracking(combinacion, centros, rutasClientes, etapa + 1, menorCosto, solucion);
+        // Guardamos el resultado.
+        if (mejorCandidato < menorCosto) {
+          menorCosto = mejorCandidato;
+          if (i == 1) {
+            solucion[etapa] = centros[etapa];
         } else {
           solucion[etapa] = null;
         }
       }
-
-      combinacion[etapa] = -1;
+    }
+    combinacion[etapa] = -1;
     }
 
     // Devolvemos el menor costo acutal.
