@@ -119,7 +119,7 @@ public class TPO {
       int costoCliente = calcularCostoCliente(rutasCliente, parcial);
 
       if (costoCliente == Integer.MAX_VALUE) {
-        return Integer.MAX_VALUE;
+        return costoCliente;
       }
 
       costosVariables += costoCliente;
